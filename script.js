@@ -34,6 +34,42 @@ function operate(operator, num1, num2) {
   }
 }
 
-function main() {}
+function main() {
+  // const vars
+  const DEFAULT_DISPLAY_TEXT = "Insert";
+
+  // all operators
+  const addOp = document.getElementById("add-operator");
+  const subtractOp = document.getElementById("subtract-operator");
+  const multiplyOp = document.getElementById("multiply-operator");
+  const divideOp = document.getElementById("divide-operator");
+  const equalOp = document.getElementById("equal-operator");
+  const clearOp = document.getElementById("clear-operator");
+
+  // container elements
+  const opsCtn = document.getElementById("calculator-operator-container");
+  const calcDisplaySpan = document.querySelector(
+    "#calculator-display-container span",
+  );
+
+  ////
+
+  calcDisplaySpan.textContent = DEFAULT_DISPLAY_TEXT;
+  let currOpsInserted = ""; // holder for current operations by user
+
+  opsCtn.addEventListener("click", (e) => {
+    let target = e.target; // target the id of button clicked
+
+    switch (target.id) {
+    }
+
+    // determine what text to fill display span with
+    if (currOpsInserted === "") {
+      calcDisplaySpan.textContent = currOpsInserted;
+    } else {
+      calcDisplaySpan.textContent = DEFAULT_DISPLAY_TEXT;
+    }
+  });
+}
 
 main();
