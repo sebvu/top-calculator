@@ -109,6 +109,8 @@ function Calculator() {
         return multiply(num1, num2);
       case "/":
         return divide(num1, num2);
+      case "^":
+        return power(num1, num2);
       case "%":
         return modulo(num1, num2);
       default:
@@ -119,6 +121,7 @@ function Calculator() {
   let subtract = (num1, num2) => num1 - num2;
   let multiply = (num1, num2) => num1 * num2;
   let divide = (num1, num2) => num1 / num2;
+  let power = (num1, num2) => num1 ** num2;
   let modulo = (num1, num2) => num1 % num2;
 }
 
