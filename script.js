@@ -1,64 +1,75 @@
-// number and operations are both referred to as ops in func names
-
 function Calculator() {
   // public
-  this.operate = () => 1;
+
+  /*
+   use calcOpsHolder to store operator and nextNum
+   calculate currNum = currNum {operator} nextNum
+  */
+  this.operate = () => {
+    let currNum = currOperators[0];
+    let calcOpsHolder = [];
+
+    for (let i = 1; i < currOperators.length; i++) {
+      calcOpsHolder.push(currOperators[i]);
+
+      if (i % 2 !== 0) {
+        let operator = calcOpsHolder[0];
+        let nextNum = calcOpsHolder[1];
+
+        currNum = calculateWithOperation(currNum, nextNum, operator);
+        // flush calcOpsHolder after usage
+        calcOpsHolder = [];
+      }
+    }
+
+    // flush currOperators, and add new sum
+    currOperators = [];
+    currOperators.push(currNum);
+    return currNum; // the final output of all operations
+  };
   this.addOp = (op) => {
-    // verify is op is a number or an operator
+    let topOpIsNaN = isNaN(parseInt(currOperators.at(-1)));
+    let newOpIsNaN = isNaN(parseInt(op));
 
-    // do not add if last element is not a number
-    if (isNaN(parseInt(currOperators.at(-1)))) return null;
-
-    currOperators.push(op);
+    // operator pushed if top is num, num is pushed if top is operator
+    if ((topOpIsNaN && !newOpIsNaN) || (!topOpIsNaN && newOpIsNaN)) {
+      currOperators.push(op);
+      return true;
+    }
+    return false;
   };
   this.popOp = () => {
-    if (currOperators.length === 0) return null; // return null if pop failed
+    if (currOperators.length === 0) return null;
     currOperators.pop();
+  };
+  this.clearOp = () => {
+    calcOpsHolder = [];
   };
   this.getOps = () => currOperators.join("");
 
   // private
-  currOperators = []; // holds current nums and operators in its appropriate order
-  add = (num1, num2) => num1 + num2;
-  subtract = (num1, num2) => num1 - num2;
-  multiply = (num1, num2) => num1 * num2;
-  divide = (num1, num2) => num1 / num2;
-}
-
-function add(num1, num2) {
-  return num1 + num2;
-}
-
-function subtract(num1, num2) {
-  return num1 - num2;
-}
-
-function multiply(num1, num2) {
-  return num1 * num2;
-}
-
-function divide(num1, num2) {
-  return num1 / num2;
-}
-
-function operate(operator, num1, num2) {
-  switch (operator) {
-    case "+":
-      add(num1, num2);
-      break;
-    case "-":
-      subtract(num1, num2);
-      break;
-    case "*":
-      multiply(num1, num2);
-      break;
-    case "/":
-      divide(num1, num2);
-      break;
-    default:
-      console.error("[operate] Invalid operator passed through");
-      break;
-  }
+  let currOperators = []; // holds current nums and operators in its appropriate order
+  let calculateWithOperation = (num1, num2, op) => {
+    switch (op) {
+      case "+":
+        return add(num1, num2);
+      case "-":
+        return subtract(num1, num2);
+      case "*":
+        return multiply(num1, num2);
+      case "/":
+        return divide(num1, num2);
+      case "%":
+        return modulo(num1, num2);
+      default:
+        return null;
+    }
+  };
+  let add = (num1, num2) => num1 + num2;
+  let subtract = (num1, num2) => num1 - num2;
+  let multiply = (num1, num2) => num1 * num2;
+  let divide = (num1, num2) => num1 / num2;
+  let modulo = (num1, num2) => num1 % num2;
 }
 
 function main() {
@@ -78,7 +89,11 @@ function main() {
     let target = e.target; // target the id of button clicked
 
     switch (target.id) {
-      case "add-operator":
+      case "number-operator":
+        break;
+      case "equal-operator":
+        break;
+      case "clear-operator":
         break;
     }
 
