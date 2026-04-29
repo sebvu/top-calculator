@@ -8,6 +8,8 @@ function Calculator() {
    will ignore trailing ops, feature!
   */
   this.operate = () => {
+    if (currOperators.length === 0) return;
+
     let currNum = parseFloat(currOperators[0]);
     let calcOpsHolder = [];
 
