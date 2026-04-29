@@ -35,18 +35,42 @@ function Calculator() {
     // set .toFixed() then remove trailing 0's with parseFloat
     let roundedCurrNum = parseFloat(currNum.toFixed(5));
 
-    currOperators.push(roundedCurrNum);
+    currOperators.push(roundedCurrNum.toString()); // MUST PAST STRING
   };
   this.pushOp = (op) => {
     let topOpIsNaN = isNaN(parseFloat(currOperators.at(-1)));
     let newOpIsNaN = isNaN(parseFloat(op));
 
-    // operator pushed if top is num, num is pushed if top is operator
-    if ((topOpIsNaN && !newOpIsNaN) || (!topOpIsNaN && newOpIsNaN)) {
-      currOperators.push(op);
-      // if a number is being appended to a number, combine
-    } else if (!topOpIsNaN && !newOpIsNaN) {
-      currOperators[currOperators.length - 1] += op;
+    switch (true) {
+      // if top is a number, op is NaN
+      // if op is ".", if top does not include "." append. else if the LAST digit is ".", do nothing.
+      // if op is not ".", just append normally
+      case !topOpIsNaN && newOpIsNaN:
+        if (op === ".") {
+          if (!currOperators.at(-1).includes(".")) {
+            currOperators[currOperators.length - 1] += op;
+          } else if (currOperators.at(-1).at(-1) === ".") {
+            break; //
+          }
+        } else {
+          currOperators.push(op);
+        }
+        break;
+
+      // if op is a number, push normally
+      case topOpIsNaN && !newOpIsNaN:
+        currOperators.push(op);
+        break;
+
+      // if top and op is number, just append op to top
+      case !topOpIsNaN && !newOpIsNaN:
+        currOperators[currOperators.length - 1] += op;
+        break;
+
+      // if top and op is NaN, only add if "." prepeneded w/a zero and top does not END with a "."
+      case topOpIsNaN && newOpIsNaN:
+        if (op === ".") currOperators.push(0 + op);
+        break;
     }
   };
   this.popOp = () => {
@@ -68,7 +92,10 @@ function Calculator() {
   this.clearOp = () => {
     currOperators = [];
   };
-  this.getOps = () => currOperators.join("");
+  this.getOps = () => {
+    console.log(currOperators);
+    return currOperators.join(" ");
+  };
 
   // private
   let currOperators = []; // holds current nums and operators in its appropriate order
