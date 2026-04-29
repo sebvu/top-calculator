@@ -24,7 +24,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #fdfbd4;
 
@@ -39,8 +39,51 @@ button {
   border: 1em solid black;
 }
 
+#calculator-display-container {
+  flex: 1;
+  width: 100%;
+  border: 1em solid orange;
+
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+span {
+  border: 1em solid green;
+}
+
+#calculator-btn-container {
+  flex: 6;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1em solid yellow;
+}
+
+#utility-container {
+  flex: 1;
+  border: 1em solid blue;
+
+  display: flex;
+  align-items: center;
+}
+
+#ops-container {
+  flex: 5;
+  border: 1em solid red;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+}
+
 #ops-container button {
   flex: 1;
+  border: 1px solid black;
+  min-height: 16px;
+  min-width: 16px;
+  margin: 16px;
 }
 
 h1 {
