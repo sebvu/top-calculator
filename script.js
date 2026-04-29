@@ -4,6 +4,8 @@ function Calculator() {
   /*
    use calcOpsHolder to store operator and nextNum
    calculate currNum = currNum {operator} nextNum
+
+   will ignore trailing ops, feature!
   */
   this.operate = () => {
     let currNum = currOperators[0];
@@ -12,11 +14,16 @@ function Calculator() {
     for (let i = 1; i < currOperators.length; i++) {
       calcOpsHolder.push(currOperators[i]);
 
-      if (i % 2 !== 0) {
+      if (i % 2 === 0) {
         let operator = calcOpsHolder[0];
         let nextNum = calcOpsHolder[1];
 
         currNum = calculateWithOperation(currNum, nextNum, operator);
+
+        if (currNum === null) {
+          return null; // ensure currNum being null is caught
+        }
+
         // flush calcOpsHolder after usage
         calcOpsHolder = [];
       }
@@ -27,7 +34,7 @@ function Calculator() {
     currOperators.push(currNum);
     return currNum; // the final output of all operations
   };
-  this.addOp = (op) => {
+  this.pushOp = (op) => {
     let topOpIsNaN = isNaN(parseInt(currOperators.at(-1)));
     let newOpIsNaN = isNaN(parseInt(op));
 
@@ -35,15 +42,32 @@ function Calculator() {
     if ((topOpIsNaN && !newOpIsNaN) || (!topOpIsNaN && newOpIsNaN)) {
       currOperators.push(op);
       return true;
+      // if a number is being appended to a number, combine
+    } else if (!topOpIsNaN && !newOpIsNaN) {
+      currOperators[currOperators.length - 1] += op;
+      return true;
     }
     return false;
   };
   this.popOp = () => {
-    if (currOperators.length === 0) return null;
-    currOperators.pop();
+    if (currOperators.length === 0) return false;
+
+    let topOp = currOperators.at(-1);
+
+    if (topOp.length > 1) {
+      // since numbers are one str entry, substring end out
+      currOperators[currOperators.length - 1] = topOp.substring(
+        0,
+        topOp.length - 1,
+      );
+    } else {
+      // simply pop the op entry
+      currOperators.pop();
+    }
+    return true;
   };
   this.clearOp = () => {
-    calcOpsHolder = [];
+    currOperators = [];
   };
   this.getOps = () => currOperators.join("");
 
@@ -65,44 +89,73 @@ function Calculator() {
         return null;
     }
   };
-  let add = (num1, num2) => num1 + num2;
-  let subtract = (num1, num2) => num1 - num2;
-  let multiply = (num1, num2) => num1 * num2;
-  let divide = (num1, num2) => num1 / num2;
-  let modulo = (num1, num2) => num1 % num2;
+  let add = (num1, num2) => parseInt(num1) + parseInt(num2);
+  let subtract = (num1, num2) => parseInt(num1) - parseInt(num2);
+  let multiply = (num1, num2) => parseInt(num1) * parseInt(num2);
+  let divide = (num1, num2) => parseInt(num1) / parseInt(num2);
+  let modulo = (num1, num2) => parseInt(num1) % parseInt(num2);
 }
 
 function main() {
-  const DEFAULT_DISPLAY_TEXT = "Insert";
+  // js declerations are hoisted to the top of their context 🙏
+  function updateTextContent() {
+    let newTextContent = calc.getOps();
 
-  const opsCtn = document.getElementById("calculator-operator-container");
+    if (newTextContent === "") newTextContent = DEFAULT_DISPLAY_TEXT;
+
+    calcDisplaySpan.textContent = newTextContent;
+  }
+
+  const DEFAULT_DISPLAY_TEXT = "Insert";
+  const opsCtn = document.getElementById("ops-container");
+  const utilCtn = document.getElementById("utility-container");
   const calcDisplaySpan = document.querySelector(
     "#calculator-display-container span",
   );
+  let calc = new Calculator(); // calculator object handling all logic
 
   calcDisplaySpan.textContent = DEFAULT_DISPLAY_TEXT;
-  let currOpsInserted = []; // holder for current operations by user
 
-  let calc = new Calculator();
-
-  opsCtn.addEventListener("click", (e) => {
-    let target = e.target; // target the id of button clicked
+  // utilities to do operations with the calculator
+  utilCtn.addEventListener("click", (e) => {
+    let target = e.target;
+    let res = ""; // return code holder
 
     switch (target.id) {
-      case "number-operator":
-        break;
       case "equal-operator":
+        console.log("equal operator is clicked");
+        res = calc.operate();
+        if (res === null) {
+          console.error("operate returned null");
+        }
+        break;
+      case "pop-operator":
+        console.log("pop operator is clicked");
+        res = calc.popOp();
+        console.log(`pop returned ${res}`);
         break;
       case "clear-operator":
+        console.log("clear operator is clicked");
+        calc.clearOp();
         break;
+      default:
     }
 
-    // determine what text to fill display span with
-    if (currOpsInserted.join("") === "") {
-      calcDisplaySpan.textContent = currOpsInserted;
-    } else {
-      calcDisplaySpan.textContent = DEFAULT_DISPLAY_TEXT;
+    updateTextContent();
+  });
+
+  // insert whatever ops are clicked (number and operators are interchangeably referred to as ops):
+  opsCtn.addEventListener("click", (e) => {
+    let target = e.target;
+
+    // verify a button is actually clicked, then push its content
+    if (target.localName === "button") {
+      let newOp = target.textContent;
+      console.log(newOp);
+      calc.pushOp(newOp);
     }
+
+    updateTextContent();
   });
 }
 
