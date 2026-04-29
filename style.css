@@ -12,6 +12,16 @@ body {
   background-color: #1e1e2e;
 }
 
+button {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  font: inherit;
+  border-radius: 0;
+}
+
 #calculator-container {
   display: flex;
   flex-direction: column;
@@ -29,6 +39,10 @@ body {
 
   padding: 1em;
   border: 1em solid black;
+}
+
+#ops-container button {
+  flex: 1;
 }
 
 h1 {
