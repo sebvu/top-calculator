@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1e1e2e;
+}
+
+#calculator-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  background-color: #fdfbd4;
+
+  width: 50%;
+  height: 60%;
+  min-width: 400px;
+  max-width: 550px;
+  min-height: 600px;
+  max-height: 800px;
+
+  padding: 1em;
+  border: 1em solid black;
+}
+
+h1 {
+  color: #fdfbd4;
+}
