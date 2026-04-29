@@ -37,7 +37,7 @@ function Calculator() {
     // set .toFixed() then remove trailing 0's with parseFloat
     let roundedCurrNum = parseFloat(currNum.toFixed(5));
 
-    currOperators.push(roundedCurrNum.toString()); // MUST PAST STRING
+    currOperators.push(roundedCurrNum.toString()); // MUST PASS ONLY STRINGS TO currOperators
   };
   this.pushOp = (op) => {
     let topOpIsNaN = isNaN(parseFloat(currOperators.at(-1)));
@@ -147,7 +147,7 @@ function main() {
     calcDisplaySpan.textContent = newTextContent;
   }
 
-  const DEFAULT_DISPLAY_TEXT = "Insert";
+  const DEFAULT_DISPLAY_TEXT = "start clicking numbers!";
   const opsCtn = document.getElementById("ops-container");
   const utilCtn = document.getElementById("utility-container");
   const calcDisplaySpan = document.querySelector(
