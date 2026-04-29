@@ -50,7 +50,7 @@ function Calculator() {
           if (!currOperators.at(-1).includes(".")) {
             currOperators[currOperators.length - 1] += op;
           } else if (currOperators.at(-1).at(-1) === ".") {
-            break; //
+            break; // exclude any operation if . is the last trailing char
           }
         } else {
           currOperators.push(op);
@@ -69,7 +69,7 @@ function Calculator() {
 
       // if top and op is NaN, only add if "." prepeneded w/a zero and top does not END with a "."
       case topOpIsNaN && newOpIsNaN:
-        if (op === ".") currOperators.push(0 + op);
+        if (op === ".") currOperators.push("0" + op);
         break;
     }
   };
@@ -88,6 +88,16 @@ function Calculator() {
       // simply pop the op entry
       currOperators.pop();
     }
+  };
+  this.signSwitchOp = () => {
+    if (isNaN(parseFloat(currOperators.at(-1)))) return;
+
+    if (currOperators.at(-1).at(0) !== "-")
+      currOperators[currOperators.length - 1] = "-" + currOperators.at(-1);
+    else
+      currOperators[currOperators.length - 1] = currOperators
+        .at(-1)
+        .substring(1);
   };
   this.clearOp = () => {
     currOperators = [];
@@ -157,6 +167,10 @@ function main() {
         if (res === null) {
           console.error("operate returned null");
         }
+        break;
+      case "sign-switch-operator":
+        console.log("sign switch operator is clicked");
+        calc.signSwitchOp();
         break;
       case "pop-operator":
         console.log("pop operator is clicked");
