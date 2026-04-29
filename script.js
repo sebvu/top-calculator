@@ -8,15 +8,15 @@ function Calculator() {
    will ignore trailing ops, feature!
   */
   this.operate = () => {
-    let currNum = currOperators[0];
+    let currNum = parseFloat(currOperators[0]);
     let calcOpsHolder = [];
 
     for (let i = 1; i < currOperators.length; i++) {
       calcOpsHolder.push(currOperators[i]);
 
       if (i % 2 === 0) {
+        let nextNum = parseFloat(calcOpsHolder[1]);
         let operator = calcOpsHolder[0];
-        let nextNum = calcOpsHolder[1];
 
         currNum = calculateWithOperation(currNum, nextNum, operator);
 
@@ -31,26 +31,26 @@ function Calculator() {
 
     // flush currOperators, and add new sum
     currOperators = [];
-    currOperators.push(currNum);
-    return currNum; // the final output of all operations
+
+    // set .toFixed() then remove trailing 0's with parseFloat
+    let roundedCurrNum = parseFloat(currNum.toFixed(5));
+
+    currOperators.push(roundedCurrNum);
   };
   this.pushOp = (op) => {
-    let topOpIsNaN = isNaN(parseInt(currOperators.at(-1)));
-    let newOpIsNaN = isNaN(parseInt(op));
+    let topOpIsNaN = isNaN(parseFloat(currOperators.at(-1)));
+    let newOpIsNaN = isNaN(parseFloat(op));
 
     // operator pushed if top is num, num is pushed if top is operator
     if ((topOpIsNaN && !newOpIsNaN) || (!topOpIsNaN && newOpIsNaN)) {
       currOperators.push(op);
-      return true;
       // if a number is being appended to a number, combine
     } else if (!topOpIsNaN && !newOpIsNaN) {
       currOperators[currOperators.length - 1] += op;
-      return true;
     }
-    return false;
   };
   this.popOp = () => {
-    if (currOperators.length === 0) return false;
+    if (currOperators.length === 0) return;
 
     let topOp = currOperators.at(-1);
 
@@ -64,7 +64,6 @@ function Calculator() {
       // simply pop the op entry
       currOperators.pop();
     }
-    return true;
   };
   this.clearOp = () => {
     currOperators = [];
@@ -89,11 +88,11 @@ function Calculator() {
         return null;
     }
   };
-  let add = (num1, num2) => parseInt(num1) + parseInt(num2);
-  let subtract = (num1, num2) => parseInt(num1) - parseInt(num2);
-  let multiply = (num1, num2) => parseInt(num1) * parseInt(num2);
-  let divide = (num1, num2) => parseInt(num1) / parseInt(num2);
-  let modulo = (num1, num2) => parseInt(num1) % parseInt(num2);
+  let add = (num1, num2) => num1 + num2;
+  let subtract = (num1, num2) => num1 - num2;
+  let multiply = (num1, num2) => num1 * num2;
+  let divide = (num1, num2) => num1 / num2;
+  let modulo = (num1, num2) => num1 % num2;
 }
 
 function main() {
@@ -131,8 +130,7 @@ function main() {
         break;
       case "pop-operator":
         console.log("pop operator is clicked");
-        res = calc.popOp();
-        console.log(`pop returned ${res}`);
+        calc.popOp();
         break;
       case "clear-operator":
         console.log("clear operator is clicked");
