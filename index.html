@@ -8,41 +8,46 @@
   </head>
 
   <body>
-    <h1>sebvu's calculator</h1>
-
     <div id="calculator-container">
       <div id="calculator-display-container">
-        <span>display</span>
+        <span>display text</span>
       </div>
 
       <div id="calculator-btn-container">
-        <div id="utility-container">
-          <!-- general utility -->
-          <button id="equal-operator">=</button>
-          <button id="sign-switch-operator">+/-</button>
-          <button id="pop-operator">pop</button>
-          <button id="clear-operator">clear</button>
+        <!-- header util operators -->
+        <div id="header-operators">
+          <div id="logo">
+            <h1>sebvu</h1>
+          </div>
+          <div id="utility-container">
+            <button id="equal-operator">=</button>
+            <button id="sign-switch-operator">+/-</button>
+            <button id="pop-operator">pop</button>
+            <button id="clear-operator">clear</button>
+          </div>
         </div>
         <div id="ops-container">
-          <!-- operations -->
-          <button>+</button>
-          <button>-</button>
-          <button>*</button>
-          <button>/</button>
-          <button>^</button>
-          <button>%</button>
-          <!-- numbers -->
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button>7</button>
-          <button>8</button>
-          <button>9</button>
-          <button>0</button>
-          <button>.</button>
+          <div id="numbers">
+            <!-- numbers -->
+            <button class="double">.</button>
+            <button>0</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <!-- operations -->
+            <button>+</button>
+            <button>-</button>
+            <button>*</button>
+            <button>/</button>
+            <button>^</button>
+            <button>%</button>
+          </div>
         </div>
       </div>
     </div>

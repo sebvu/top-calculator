@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Intel+One+Mono:ital,wght@0,300..700;1,300..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+@font-face {
+  font-family: "DigitalMono";
+  src: url(fonts/digital-7\ \(mono\).ttf);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -12,80 +18,114 @@ body {
   background-color: #1e1e2e;
 }
 
-button {
-  /* remove all default button styling */
+button,
+h1 {
+  font-family: "Intel One Mono", monospace;
   background-color: transparent;
   border: none;
   margin: 0;
   padding: 0;
 }
 
+button {
+  font-size: 1.5em;
+  color: white;
+  background-color: darkslategray;
+
+  padding: 5px;
+  border: 3px ridge darkslategray;
+  border-radius: 1px;
+}
+
 #calculator-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fdfbd4;
+  gap: 2em;
+  justify-content: start;
+  align-items: stretch;
+  background-color: gray;
 
   width: 50%;
   height: 60%;
   min-width: 550px;
   max-width: 550px;
-  max-height: 800px;
-  max-height: 800px;
+  max-height: 650px;
+  max-height: 650px;
 
-  padding: 1em;
-  border: 1em solid black;
+  padding: 2em;
+  border: 1em ridge darkslategray;
+  border-radius: 1em;
 }
 
-#calculator-display-container {
+#calculator-btn-container {
   flex: 1;
-  width: 100%;
-  border: 1em solid orange;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+/* DISPLAY TEXT STYLING */
+
+#calculator-display-container {
+  background-color: greenyellow;
+  border: 1em ridge darkgray;
+  padding: 8px;
+  overflow: hidden;
 
   display: flex;
   justify-content: end;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
-span {
-  border: 1em solid green;
+#calculator-display-container span {
+  font-family: "DigitalMono", sans-serif;
+  font-size: 2em;
 }
 
-#calculator-btn-container {
-  flex: 6;
-  width: 100%;
+/* HEADER UTIL STYLING */
+
+#header-operators {
   display: flex;
-  flex-direction: column;
-  border: 1em solid yellow;
+  align-items: center;
+  gap: 1em;
 }
 
 #utility-container {
   flex: 1;
-  border: 1em solid blue;
-
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
 }
+
+#utility-container button {
+  flex: 1;
+}
+
+#logo {
+  flex: none;
+}
+
+/* OPS CONTAINER STYLING */
 
 #ops-container {
-  flex: 5;
-  border: 1em solid red;
-
-  display: flex;
-  flex-wrap: wrap;
-  align-items: start;
-}
-
-#ops-container button {
   flex: 1;
-  border: 1px solid black;
-  min-height: 16px;
-  min-width: 16px;
-  margin: 16px;
+  display: flex;
+  gap: 2em;
 }
 
-h1 {
-  color: #fdfbd4;
+#numbers {
+  flex: 2;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+#numbers button {
+  width: 25%;
+}
+
+#numbers .double {
+  width: 63%;
 }

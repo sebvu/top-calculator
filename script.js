@@ -147,7 +147,7 @@ function main() {
     calcDisplaySpan.textContent = newTextContent;
   }
 
-  const DEFAULT_DISPLAY_TEXT = "start clicking numbers!";
+  const DEFAULT_DISPLAY_TEXT = "_";
   const opsCtn = document.getElementById("ops-container");
   const utilCtn = document.getElementById("utility-container");
   const calcDisplaySpan = document.querySelector(
