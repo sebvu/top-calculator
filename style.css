@@ -71,6 +71,7 @@ button {
   border: 1em ridge darkgray;
   padding: 1em;
   overflow: hidden;
+  text-wrap: nowrap;
 
   display: flex;
   justify-content: end;
