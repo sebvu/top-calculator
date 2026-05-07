@@ -110,12 +110,6 @@ button {
 /* OPS CONTAINER STYLING */
 
 #ops-container {
-  flex: 1;
-  display: flex;
-  gap: 2em;
-}
-
-#numbers {
   flex: 2;
   display: flex;
   flex-wrap: wrap-reverse;
@@ -123,10 +117,10 @@ button {
   gap: 1em;
 }
 
-#numbers button {
+#ops-container button {
   width: 25%;
 }
 
-#numbers .double {
+#ops-container .double {
   width: 63%;
 }

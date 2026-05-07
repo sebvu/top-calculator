@@ -160,6 +160,10 @@ function main() {
   const calcDisplaySpan = document.querySelector(
     "#calculator-display-container span",
   );
+  const validKeyboardInputList = Array.from(
+    document.querySelectorAll("#ops-container button"),
+  ).map((n) => n.textContent); // list of all valid keys
+
   let calc = new Calculator(); // calculator object handling all logic
 
   calcDisplaySpan.textContent = DEFAULT_DISPLAY_TEXT;
@@ -211,6 +215,34 @@ function main() {
     }
 
     updateTextContent();
+  });
+
+  // handle direct keyboard input for anywhere on the body for specific keys
+  document.querySelector("body").addEventListener("keydown", (e) => {
+    let eKey = e.key;
+    let optDisplayText = ""; // default text holder
+
+    switch (true) {
+      case validKeyboardInputList.includes(eKey):
+        console.log(`keypressed ${eKey}`);
+        calc.pushOp(e.key);
+        break;
+      case eKey === "Enter":
+        console.log("keydown enter pressed");
+        res = calc.operate();
+        if (res === null) {
+          console.error("operate returned null");
+        } else if (res === 1) {
+          console.log("division by zero!");
+          optDisplayText = DIVIDE_BY_ZERO_TEXT;
+        }
+        break;
+      case eKey === "Backspace":
+        console.log("keydown backspace pressed");
+        calc.popOp();
+        break;
+    }
+    updateTextContent(optDisplayText);
   });
 }
 
