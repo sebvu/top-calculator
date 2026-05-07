@@ -20,6 +20,11 @@ function Calculator() {
         let nextNum = parseFloat(calcOpsHolder[1]);
         let operator = calcOpsHolder[0];
 
+        if (nextNum.toString() === "0" && operator.toString() === "/") {
+          currOperators = []; // flush line
+          return 1; // return code for division by zero
+        }
+
         currNum = calculateWithOperation(currNum, nextNum, operator);
 
         if (currNum === null) {
@@ -139,8 +144,9 @@ function Calculator() {
 
 function main() {
   // js declerations are hoisted to the top of their context 🙏
-  function updateTextContent() {
-    let newTextContent = calc.getOps();
+  function updateTextContent(optionalDisplayText = "") {
+    let newTextContent =
+      optionalDisplayText === "" ? calc.getOps() : optionalDisplayText;
 
     if (newTextContent === "") newTextContent = DEFAULT_DISPLAY_TEXT;
 
@@ -148,6 +154,7 @@ function main() {
   }
 
   const DEFAULT_DISPLAY_TEXT = "_";
+  const DIVIDE_BY_ZERO_TEXT = "YOUR A CHEEKY ONE :(";
   const opsCtn = document.getElementById("ops-container");
   const utilCtn = document.getElementById("utility-container");
   const calcDisplaySpan = document.querySelector(
@@ -160,7 +167,8 @@ function main() {
   // utilities to do operations with the calculator
   utilCtn.addEventListener("click", (e) => {
     let target = e.target;
-    let res = ""; // return code holder
+    let res; // return code holder
+    let optDisplayText = ""; // default text holder
 
     switch (target.id) {
       case "equal-operator":
@@ -168,6 +176,9 @@ function main() {
         res = calc.operate();
         if (res === null) {
           console.error("operate returned null");
+        } else if (res === 1) {
+          console.log("division by zero!");
+          optDisplayText = DIVIDE_BY_ZERO_TEXT;
         }
         break;
       case "sign-switch-operator":
@@ -185,7 +196,7 @@ function main() {
       default:
     }
 
-    updateTextContent();
+    updateTextContent(optDisplayText);
   });
 
   // insert whatever ops are clicked (number and operators are interchangeably referred to as ops):
