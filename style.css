@@ -30,9 +30,9 @@ button {
 
   width: 50%;
   height: 60%;
-  min-width: 400px;
+  min-width: 550px;
   max-width: 550px;
-  min-height: 600px;
+  max-height: 800px;
   max-height: 800px;
 
   padding: 1em;
