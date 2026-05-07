@@ -85,7 +85,8 @@ function Calculator() {
 
     let topOp = currOperators.at(-1);
 
-    if (topOp.length > 1) {
+    // ensure not implicit conversion when comparing Infinity to string case
+    if (topOp.length > 1 && !isNaN(topOp) && topOp != Infinity) {
       // since numbers are one str entry, substring end out
       currOperators[currOperators.length - 1] = topOp.substring(
         0,
