@@ -33,8 +33,9 @@ button {
   background-color: darkslategray;
 
   padding: 5px;
-  border: 3px ridge darkslategray;
+  border: 0.2em ridge darkslategray;
   border-radius: 1px;
+  box-shadow: 2px 2px 5px black;
 }
 
 #calculator-container {
@@ -55,6 +56,7 @@ button {
   padding: 2em;
   border: 1em ridge darkslategray;
   border-radius: 1em;
+  box-shadow: 5px 5px 8px black;
 }
 
 #calculator-btn-container {
@@ -69,7 +71,7 @@ button {
 #calculator-display-container {
   background-color: greenyellow;
   border: 1em ridge darkgray;
-  padding: 8px;
+  padding: 1em;
   overflow: hidden;
 
   display: flex;
