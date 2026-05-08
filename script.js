@@ -146,6 +146,8 @@ function Calculator() {
 function main() {
   // js declerations are hoisted to the top of their context 🙏
   function updateTextContent(optionalDisplayText = "") {
+    optDisplayTextHolder = ""; // flush old text holder content
+
     let newTextContent =
       optionalDisplayText === "" ? calc.getOps() : optionalDisplayText;
 
@@ -156,6 +158,7 @@ function main() {
 
   const DEFAULT_DISPLAY_TEXT = "_";
   const DIVIDE_BY_ZERO_TEXT = "YOUR A CHEEKY ONE :(";
+  let optDisplayTextHolder = ""; // optional filler field for displaying text
   const opsCtn = document.getElementById("ops-container");
   const utilCtn = document.getElementById("utility-container");
   const calcDisplaySpan = document.querySelector(
@@ -173,7 +176,6 @@ function main() {
   utilCtn.addEventListener("click", (e) => {
     let target = e.target;
     let res; // return code holder
-    let optDisplayText = ""; // default text holder
 
     switch (target.id) {
       case "equal-operator":
@@ -183,7 +185,7 @@ function main() {
           console.error("operate returned null");
         } else if (res === 1) {
           console.log("division by zero!");
-          optDisplayText = DIVIDE_BY_ZERO_TEXT;
+          optDisplayTextHolder = DIVIDE_BY_ZERO_TEXT;
         }
         break;
       case "sign-switch-operator":
@@ -201,7 +203,7 @@ function main() {
       default:
     }
 
-    updateTextContent(optDisplayText);
+    updateTextContent(optDisplayTextHolder);
   });
 
   // insert whatever ops are clicked (number and operators are interchangeably referred to as ops):
@@ -221,7 +223,6 @@ function main() {
   // handle direct keyboard input for anywhere on the body for specific keys
   document.querySelector("body").addEventListener("keydown", (e) => {
     let eKey = e.key;
-    let optDisplayText = ""; // default text holder
 
     switch (true) {
       case validKeyboardInputList.includes(eKey):
@@ -235,7 +236,7 @@ function main() {
           console.error("operate returned null");
         } else if (res === 1) {
           console.log("division by zero!");
-          optDisplayText = DIVIDE_BY_ZERO_TEXT;
+          optDisplayTextHolder = DIVIDE_BY_ZERO_TEXT;
         }
         break;
       case eKey === "Backspace":
@@ -243,7 +244,7 @@ function main() {
         calc.popOp();
         break;
     }
-    updateTextContent(optDisplayText);
+    updateTextContent(optDisplayTextHolder);
   });
 }
 
