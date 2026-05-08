@@ -4,67 +4,70 @@
   src: url(fonts/digital-7\ \(mono\).ttf);
 }
 
+/* globally applied elements */
+
 * {
   box-sizing: border-box;
 }
 
 body {
+  height: 100vh;
+  background-color: #5c4f43;
+
   display: flex;
   flex-direction: column;
   gap: 1em;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #5c4f43;
-}
-
-button,
-h1 {
-  font-family: "Intel One Mono", monospace;
-  background-color: transparent;
-  border: none;
-  margin: 0;
-  padding: 0;
 }
 
 button {
   font-size: 1.5em;
   color: white;
   background-color: darkslategray;
-
-  padding: 5px;
-  border: 0.2em ridge darkslategray;
+  border: 0.1em ridge darkslategray;
   border-radius: 1px;
   box-shadow: 2px 2px 5px black;
+  padding: 5px;
 }
 
+button,
+h1 {
+  font-family: "Intel One Mono", monospace;
+  margin: 0;
+  padding: 0;
+}
+
+/* calculator containers */
+
 #calculator-container {
+  width: 60%;
+  min-width: 515px;
+  max-width: 630px;
+  height: 80%;
+  max-height: 750px;
+  background-color: gray;
+  padding: 2em;
+  border: 1em ridge darkslategray;
+  border-radius: 1em;
+  box-shadow: 5px 5px 8px black;
+
   display: flex;
   flex-direction: column;
   gap: 2em;
   justify-content: start;
   align-items: stretch;
-  background-color: gray;
-
-  width: 50%;
-  min-width: 515px;
-  max-width: 630px;
-  aspect-ratio: 3 / 4;
-
-  padding: 2em;
-  border: 1em ridge darkslategray;
-  border-radius: 1em;
-  box-shadow: 5px 5px 8px black;
 }
+
+/* display and btn location container styling */
 
 #calculator-btn-container {
   flex: 1;
+
   display: flex;
   flex-direction: column;
   gap: 2em;
 }
-
-/* DISPLAY TEXT STYLING */
 
 #calculator-display-container {
   background-color: greenyellow;
@@ -84,7 +87,7 @@ button {
   font-size: 2em;
 }
 
-/* HEADER UTIL STYLING */
+/* utility section styling */
 
 #header-operators {
   display: flex;
@@ -107,7 +110,7 @@ button {
   flex: none;
 }
 
-/* OPS CONTAINER STYLING */
+/* ops button and container styling */
 
 #ops-container {
   flex: 2;
