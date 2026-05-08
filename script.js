@@ -154,16 +154,6 @@ function Calculator() {
 function main() {
   // js declerations are hoisted to the top of their context 🙏
   function postEventHandler(ret) {
-    // update text
-    let newTextContent =
-      optDisplayTextHolder === "" ? calc.getOps() : optDisplayTextHolder;
-
-    if (newTextContent === "") newTextContent = DEFAULT_DISPLAY_TEXT;
-
-    calcDisplaySpan.textContent = newTextContent;
-
-    optDisplayTextHolder = ""; // flush old text holder content
-
     // handle res given mainly from operate() function
     switch (ret) {
       case null:
@@ -180,6 +170,16 @@ function main() {
       default:
         isInitialOutput = false; // non operate function turning output flag off
     }
+
+    // update text
+    let newTextContent =
+      optDisplayTextHolder === "" ? calc.getOps() : optDisplayTextHolder;
+
+    if (newTextContent === "") newTextContent = DEFAULT_DISPLAY_TEXT;
+
+    calcDisplaySpan.textContent = newTextContent;
+
+    optDisplayTextHolder = ""; // flush old text holder content
   }
 
   const DEFAULT_DISPLAY_TEXT = "_";
