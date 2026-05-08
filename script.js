@@ -22,7 +22,7 @@ function Calculator() {
 
         if (nextNum.toString() === "0" && operator.toString() === "/") {
           currOperators = []; // flush line
-          return 1; // return code for division by zero
+          return 0; // return code for division by zero
         }
 
         currNum = calculateWithOperation(currNum, nextNum, operator);
@@ -43,8 +43,10 @@ function Calculator() {
     let roundedCurrNum = parseFloat(currNum.toFixed(5));
 
     currOperators.push(roundedCurrNum.toString()); // MUST PASS ONLY STRINGS TO currOperators
+
+    return true; // successful operation
   };
-  this.pushOp = (op) => {
+  this.pushOp = (op, isInitialOutput) => {
     let topOpIsNaN = isNaN(parseFloat(currOperators.at(-1)));
     let newOpIsNaN = isNaN(parseFloat(op));
 
@@ -71,7 +73,13 @@ function Calculator() {
 
       // if top and op is number, just append op to top
       case !topOpIsNaN && !newOpIsNaN:
-        currOperators[currOperators.length - 1] += op;
+        // flush initial output if overwritten by a number
+        if (isInitialOutput === true) {
+          currOperators = [];
+          currOperators.push(op);
+        } else {
+          currOperators[currOperators.length - 1] += op;
+        }
         break;
 
       // if top and op is NaN, only add if "." prepeneded w/a zero and top does not END with a "."
@@ -145,20 +153,37 @@ function Calculator() {
 
 function main() {
   // js declerations are hoisted to the top of their context 🙏
-  function updateTextContent(optionalDisplayText = "") {
-    optDisplayTextHolder = ""; // flush old text holder content
-
+  function postEventHandler(ret) {
+    // update text
     let newTextContent =
-      optionalDisplayText === "" ? calc.getOps() : optionalDisplayText;
+      optDisplayTextHolder === "" ? calc.getOps() : optDisplayTextHolder;
 
     if (newTextContent === "") newTextContent = DEFAULT_DISPLAY_TEXT;
 
     calcDisplaySpan.textContent = newTextContent;
+
+    optDisplayTextHolder = ""; // flush old text holder content
+
+    // handle res given mainly from operate() function
+    switch (ret) {
+      case null:
+        console.error("operate returned null, broken operation detected");
+        break;
+      case 0:
+        console.log("operate returned 0, division by 0 detected!");
+        optDisplayTextHolder = DIVIDE_BY_ZERO_TEXT;
+        break;
+      case true:
+        isInitialOutput = true;
+        console.log("successful output");
+        break;
+      default:
+        isInitialOutput = false; // non operate function turning output flag off
+    }
   }
 
   const DEFAULT_DISPLAY_TEXT = "_";
   const DIVIDE_BY_ZERO_TEXT = "YOUR A CHEEKY ONE :(";
-  let optDisplayTextHolder = ""; // optional filler field for displaying text
   const opsCtn = document.getElementById("ops-container");
   const utilCtn = document.getElementById("utility-container");
   const calcDisplaySpan = document.querySelector(
@@ -167,6 +192,10 @@ function main() {
   const validKeyboardInputList = Array.from(
     document.querySelectorAll("#ops-container button"),
   ).map((n) => n.textContent); // list of all valid keys
+
+  let optDisplayTextHolder = ""; // optional filler field for displaying text
+  let retCode; // return code holder from calculator
+  let isInitialOutput = false; // flag is set so numbers can overwrite an initial output
 
   let calc = new Calculator(); // calculator object handling all logic
 
@@ -181,12 +210,6 @@ function main() {
       case "equal-operator":
         console.log("equal operator is clicked");
         res = calc.operate();
-        if (res === null) {
-          console.error("operate returned null");
-        } else if (res === 1) {
-          console.log("division by zero!");
-          optDisplayTextHolder = DIVIDE_BY_ZERO_TEXT;
-        }
         break;
       case "sign-switch-operator":
         console.log("sign switch operator is clicked");
@@ -202,8 +225,7 @@ function main() {
         break;
       default:
     }
-
-    updateTextContent(optDisplayTextHolder);
+    postEventHandler(res);
   });
 
   // insert whatever ops are clicked (number and operators are interchangeably referred to as ops):
@@ -214,10 +236,9 @@ function main() {
     if (target.localName === "button") {
       let newOp = target.textContent;
       console.log(newOp);
-      calc.pushOp(newOp);
+      calc.pushOp(newOp, isInitialOutput);
     }
-
-    updateTextContent();
+    postEventHandler(retCode);
   });
 
   // handle direct keyboard input for anywhere on the body for specific keys
@@ -227,24 +248,18 @@ function main() {
     switch (true) {
       case validKeyboardInputList.includes(eKey):
         console.log(`keypressed ${eKey}`);
-        calc.pushOp(e.key);
+        calc.pushOp(e.key, isInitialOutput);
         break;
       case eKey === "Enter":
         console.log("keydown enter pressed");
-        res = calc.operate();
-        if (res === null) {
-          console.error("operate returned null");
-        } else if (res === 1) {
-          console.log("division by zero!");
-          optDisplayTextHolder = DIVIDE_BY_ZERO_TEXT;
-        }
+        calc.operate();
         break;
       case eKey === "Backspace":
         console.log("keydown backspace pressed");
         calc.popOp();
         break;
     }
-    updateTextContent(optDisplayTextHolder);
+    postEventHandler(retCode);
   });
 }
 
