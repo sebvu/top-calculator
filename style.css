@@ -45,6 +45,7 @@ h1 {
   min-width: 515px;
   max-width: 630px;
   height: 80%;
+  min-height: 520px;
   max-height: 750px;
   background-color: gray;
   padding: 2em;
