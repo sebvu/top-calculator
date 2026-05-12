@@ -114,17 +114,17 @@ h1 {
 /* ops button and container styling */
 
 #ops-container {
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-wrap: wrap-reverse;
   justify-content: space-between;
-  gap: 1em;
+  gap: 1rem;
 }
 
 #ops-container button {
-  width: 25%;
+  flex: 1 1 30%;
 }
 
 #ops-container .double {
-  width: 63%;
+  flex: 1 1 65%;
 }
