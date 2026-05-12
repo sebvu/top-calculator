@@ -28,6 +28,7 @@ function Calculator() {
         currNum = calculateWithOperation(currNum, nextNum, operator);
 
         if (currNum === null) {
+          currOperators = [];
           return null; // ensure currNum being null is caught
         }
 
@@ -157,7 +158,10 @@ function main() {
     // handle res given mainly from operate() function
     switch (ret) {
       case null:
-        console.error("operate returned null, broken operation detected");
+        console.error(
+          "operate returned null, broken operation detected. flushing ops",
+        );
+        optDisplayTextHolder = ERROR_TEXT;
         break;
       case 0:
         console.log("operate returned 0, division by 0 detected!");
@@ -184,6 +188,7 @@ function main() {
 
   const DEFAULT_DISPLAY_TEXT = "_";
   const DIVIDE_BY_ZERO_TEXT = "YOUR A CHEEKY ONE :(";
+  const ERROR_TEXT = "ERROR.. RETRY!";
   const opsCtn = document.getElementById("ops-container");
   const utilCtn = document.getElementById("utility-container");
   const calcDisplaySpan = document.querySelector(
