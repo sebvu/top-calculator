@@ -184,6 +184,8 @@ function main() {
     calcDisplaySpan.textContent = newTextContent;
 
     optDisplayTextHolder = ""; // flush old text holder content
+
+    res = 1;
   }
 
   const DEFAULT_DISPLAY_TEXT = "_";
@@ -199,7 +201,7 @@ function main() {
   ).map((n) => n.textContent); // list of all valid keys
 
   let optDisplayTextHolder = ""; // optional filler field for displaying text
-  let res; // return code holder from calculator
+  let res = 1; // return code holder from calculator (1 as default for good)
   let isInitialOutput = false; // flag is set so numbers can overwrite an initial output
 
   let calc = new Calculator(); // calculator object handling all logic
