@@ -199,7 +199,7 @@ function main() {
   ).map((n) => n.textContent); // list of all valid keys
 
   let optDisplayTextHolder = ""; // optional filler field for displaying text
-  let retCode; // return code holder from calculator
+  let res; // return code holder from calculator
   let isInitialOutput = false; // flag is set so numbers can overwrite an initial output
 
   let calc = new Calculator(); // calculator object handling all logic
@@ -243,7 +243,7 @@ function main() {
       console.log(newOp);
       calc.pushOp(newOp, isInitialOutput);
     }
-    postEventHandler(retCode);
+    postEventHandler(res);
   });
 
   // handle direct keyboard input for anywhere on the body for specific keys
@@ -257,14 +257,14 @@ function main() {
         break;
       case eKey === "Enter":
         console.log("keydown enter pressed");
-        calc.operate();
+        res = calc.operate();
         break;
       case eKey === "Backspace":
         console.log("keydown backspace pressed");
         calc.popOp();
         break;
     }
-    postEventHandler(retCode);
+    postEventHandler(res);
   });
 }
 
